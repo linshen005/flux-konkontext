@@ -915,7 +915,7 @@ export function FluxKontextGenerator() {
         timestamp: new Date().toISOString()
       });
 
-      let result: { images: Array<{ url: string; width?: number; height?: number }> };
+      let result: { images: Array<{ url: string; width?: number; height?: number }> }| undefined;
       
       // 如果需要生成超过4张图片且用户有权限，使用批量生成
       if ((request.num_images || 1) > 4 && hasFeature(userType, 'batchGeneration')) {
@@ -978,6 +978,10 @@ export function FluxKontextGenerator() {
         }
 
         result = data.data;
+            // 检查批量生成是否因错误而提前返回 (e.g., Turnstile)
+    if (!result) {
+      return; 
+    }
       }
 
       console.log('✅ 图像生成成功:', {
