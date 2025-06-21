@@ -7,6 +7,7 @@ import SessionProvider from "@/components/providers/SessionProvider";
 import { GoogleOneTap } from "@/components/GoogleOneTap";
 import { GoogleOneTapTrigger } from "@/components/GoogleOneTapTrigger";
 import { StructuredData } from "@/components/StructuredData";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -72,6 +73,18 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <StructuredData />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-CRZJFXR2NM"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-CRZJFXR2NM');
+          `}
+        </Script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <SessionProvider>
