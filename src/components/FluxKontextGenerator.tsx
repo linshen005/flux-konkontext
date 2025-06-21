@@ -978,19 +978,21 @@ export function FluxKontextGenerator() {
         }
 
         result = data.data;
-            // 检查批量生成是否因错误而提前返回 (e.g., Turnstile)
-    if (!result) {
-      return; 
-    }
       }
 
+      // 检查批量生成是否因错误而提前返回 (e.g., Turnstile)
+      if (!result) {
+        return; 
+      }
+
+      const images = result.images;
       console.log('✅ 图像生成成功:', {
-        imageCount: result.images.length,
-        firstImageUrl: result.images[0]?.url?.substring(0, 50) + '...',
+        imageCount: images.length,
+        firstImageUrl: images[0]?.url?.substring(0, 50) + '...',
         duration: Date.now() - startTime
       });
 
-      const newImages: GeneratedImage[] = result.images.map((img) => ({
+      const newImages: GeneratedImage[] = images.map((img) => ({
         url: img.url,
         width: img.width,
         height: img.height,
